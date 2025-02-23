@@ -1,10 +1,5 @@
 // types.ts
-export interface Post {
-  id: number
-  userId: number
-  title: string
-  body: string
-}
+// Removed duplicate Post interface
 
 export interface Comment {
   id: number
@@ -12,4 +7,11 @@ export interface Comment {
   name: string
   email: string
   body: string
+}
+export type Post = {
+  id: string
+  title: string
+  body: string
+  userId: string
+  date?: string
 }
