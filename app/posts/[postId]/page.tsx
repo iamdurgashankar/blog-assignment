@@ -2,11 +2,11 @@ import { getPost, getComments } from '@/lib/api'
 import Image from 'next/image'
 import CommentsSection from '@/components/CommentsSection'
 
-interface PostPageProps {
+export default async function PostPage({
+  params,
+}: {
   params: { postId: string }
-}
-
-export default async function PostPage({ params }: PostPageProps) {
+}) {
   if (!params?.postId) {
     return <div>Error: Missing Post ID</div>
   }
@@ -18,7 +18,6 @@ export default async function PostPage({ params }: PostPageProps) {
 
   return (
     <div className="max-w-3xl mx-auto px-4 pt-8 sm:px-0">
-      {/* Image Section */}
       <Image
         src={`https://picsum.photos/600/400?random=${post.id}`}
         alt={post.title}
@@ -27,7 +26,6 @@ export default async function PostPage({ params }: PostPageProps) {
         className="w-full h-48 object-cover rounded-t-md"
       />
       <article className="bg-white rounded-b-md shadow-md p-8 mb-12">
-        {/* Post Header */}
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{post.title}</h1>
           <div className="flex items-center text-sm text-gray-500">
@@ -38,13 +36,11 @@ export default async function PostPage({ params }: PostPageProps) {
           </div>
         </header>
 
-        {/* Post Body */}
         <div className="prose max-w-none text-gray-700">
           <p className="text-lg leading-relaxed">{post.body}</p>
         </div>
       </article>
 
-      {/* Updated Comments Section */}
       <CommentsSection initialComments={comments} postId={params.postId} />
     </div>
   )
