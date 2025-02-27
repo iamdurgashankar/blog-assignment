@@ -4,9 +4,10 @@ import CommentsSection from '@/components/CommentsSection'
 
 export default async function PostPage({
   params,
-}: { params: { postId: string } }) {  // ✅ Explicitly defining params type
+}: { params: Promise<{ postId: string }> }) { 
 
-  const { postId } = params
+  const resolvedParams = await params  
+  const { postId } = resolvedParams
 
   if (!postId) {
     return <div>Error: Missing Post ID</div>
