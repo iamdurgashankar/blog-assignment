@@ -3,13 +3,13 @@ import { getPost, getComments } from '@/lib/api'
 import Image from 'next/image'
 import CommentsSection from '@/components/CommentsSection'
 
-interface PostPageProps {
+interface postPageProps {
   params: {
     postId: string
   }
 }
 
-export default async function PostPage({ params }: PostPageProps) {
+export default async function postPage({ params }: postPageProps) {
   const [post, comments] = await Promise.all([
     getPost(params.postId),
     getComments(params.postId),
