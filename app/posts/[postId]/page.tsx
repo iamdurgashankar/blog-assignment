@@ -4,20 +4,22 @@ import CommentsSection from '@/components/CommentsSection'
 
 export default async function PostPage({
   params,
-}: {
-  params: { postId: string }
-}) {
-  if (!params?.postId) {
+}: { params: { postId: string } }) {  // ✅ Explicitly defining params type
+
+  const { postId } = params
+
+  if (!postId) {
     return <div>Error: Missing Post ID</div>
   }
 
   const [post, comments] = await Promise.all([
-    getPost(params.postId),
-    getComments(params.postId),
+    getPost(postId),
+    getComments(postId),
   ])
 
   return (
     <div className="max-w-3xl mx-auto px-4 pt-8 sm:px-0">
+      {/* Image Section */}
       <Image
         src={`https://picsum.photos/600/400?random=${post.id}`}
         alt={post.title}
@@ -25,7 +27,10 @@ export default async function PostPage({
         height={400}
         className="w-full h-48 object-cover rounded-t-md"
       />
+
+      {/* Post Content */}
       <article className="bg-white rounded-b-md shadow-md p-8 mb-12">
+        {/* Post Header */}
         <header className="mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">{post.title}</h1>
           <div className="flex items-center text-sm text-gray-500">
@@ -36,12 +41,14 @@ export default async function PostPage({
           </div>
         </header>
 
+        {/* Post Body */}
         <div className="prose max-w-none text-gray-700">
           <p className="text-lg leading-relaxed">{post.body}</p>
         </div>
       </article>
 
-      <CommentsSection initialComments={comments} postId={params.postId} />
+      {/* Comments Section */}
+      <CommentsSection initialComments={comments} postId={postId} />
     </div>
   )
 }
